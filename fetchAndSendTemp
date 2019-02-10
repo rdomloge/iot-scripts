@@ -1,0 +1,9 @@
+#!/bin/bash
+
+TEMP=`python temp.py`
+
+echo The temp is "$TEMP"c
+
+python3 send.py Pi0 "$TEMP"
+
+
