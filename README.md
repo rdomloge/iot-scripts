@@ -1,3 +1,2 @@
 # iot-scripts
-# iot-scripts
-# iot-scripts
+Scripts written in Python for devices to push data
