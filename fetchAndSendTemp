@@ -4,6 +4,6 @@ TEMP=`python /home/pi/iot-scripts/temp.py`
 
 echo The temp is "$TEMP"c
 
-python3 /home/pi/iot-scripts/send.py Pi0 "$TEMP"
+python3 /home/pi/iot-scripts/sendTemp.py Pi0 "$TEMP"
 
 
