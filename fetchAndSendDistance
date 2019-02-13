@@ -4,6 +4,6 @@ DISTANCE_CM=`python /home/pi/iot-scripts/distance.py`
 
 echo The distance is "$DISTANCE_CM"/cm
 
-python /home/pi/iot-scripts/sendDistance.py Pi0 "$DISTANCE_CM"
+python3 /home/pi/iot-scripts/sendDistance.py Pi0 "$DISTANCE_CM"
 
 
