@@ -41,6 +41,7 @@ while True:
             None
             #print(GPIO.input(inpt), end='')
             GPIO.input(inpt)
+            time.sleep(0.1)
         except KeyboardInterrupt:
             print('CTRL-C - exiting')
             GPIO.cleanup()
