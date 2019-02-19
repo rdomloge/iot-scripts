@@ -1,5 +1,7 @@
+#!/usr/bin/python3
 import RPi.GPIO as GPIO
-import time, sys, socket, datetime, requests, json
+import time, sys
+f = open('FlowMeterOutput.txt', 'a')
 
 GPIO.setmode(GPIO.BOARD)
 inpt = 22
@@ -18,31 +20,18 @@ def Pulse_cnt(inpt_pin):
     rate_cnt += 1
     tot_cnt += 1
 
-def sendFlow(lpm):
-    url = 'http://10.0.0.14:8080/flowReadings'
-    data = {
-        "source": None,
-        "distance_cm": None,
-        "time": None,
-        "hostname": None
-    }
-    data["source"] = 'Pi0'
-    data["flow_lpm"] = lpm
-    data["hostname"] = socket.gethostname()
-    data["time"] = datetime.datetime.utcnow().isoformat()
-    jsonStr = json.dumps(data);
-    print("Data: "+jsonStr); 
-    response = requests.post(url, data=jsonStr)
-    print("Result: "+str(response.status_code));
-    print("Msg: "+response.text);
-
 GPIO.add_event_detect(inpt,GPIO.FALLING,
         callback=Pulse_cnt,bouncetime=10)
 
 # MAIN
-rpt_int = 300
+print('Water Flow - approximate ',
+        str(time.asctime(time.localtime(time.time()))))
+rpt_int = int(input('Input desired report interval in seconds '))
 print('Reports every ', rpt_int, ' seconds')
 print('CTRL-C to exit')
+f.write('\nWater Flow - approximate - Reports every ' +
+        str(rpt_int)+' Seconds  '+
+        str(time.asctime(time.localtime(time.time()))))
 
 while True:
     time_new = time.time()+rpt_int
@@ -52,10 +41,10 @@ while True:
             None
             #print(GPIO.input(inpt), end='')
             GPIO.input(inpt)
-            time.sleep(0.1);
         except KeyboardInterrupt:
             print('CTRL-C - exiting')
             GPIO.cleanup()
+            f.close()
             print('Done')
             sys.exit()
 
@@ -64,7 +53,15 @@ while True:
     LperM = round(((rate_cnt*constant)/(rpt_int/60)),2)
     TotLit = round(tot_cnt * constant,1)
     print('\nLitres / min ', LperM, '(',rpt_int, ' second sample)')
-    sendFlow(LperM);
+    print('Total litres ', TotLit)
+    print('Time (min & clock) ', minutes, '\t',
+            time.asctime(time.localtime(time.time())), '\n')
+    f.write('\nLitres / min ' + str(LperM))
+    f.write('  Total litres ' + str(TotLit))
+    f.write('  Tie (min & clock) ' + str(minutes) + '\t' +
+            str(time.asctime(time.localtime(time.time()))))
+    f.flush()
 
 GPIO.cleanup()
+f.close()
 print('Done')
