@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 import RPi.GPIO as GPIO
 import time, sys
+import sendemail
+
 f = open('FlowMeterOutput.txt', 'a')
 
 GPIO.setmode(GPIO.BOARD)
@@ -52,6 +54,8 @@ while True:
     minutes += 1
 
     LperM = round(((rate_cnt*constant)/(rpt_int/60)),2)
+    if(LperM > 0): 
+            sendemail.send('rdomloge@gmail.com', 'rdomloge+flow-iot@gmail.com', 'Flow detected', 'Flow:'+str(LperM))
     TotLit = round(tot_cnt * constant,1)
     print('\nLitres / min ', LperM, '(',rpt_int, ' second sample)')
     print('Total litres ', TotLit)

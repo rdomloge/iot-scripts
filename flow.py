@@ -2,6 +2,7 @@
 
 import RPi.GPIO as GPIO
 import time, sys, socket, datetime, requests, json
+import sendemail
 
 GPIO.setmode(GPIO.BOARD)
 inpt = 22
@@ -54,7 +55,7 @@ while True:
             None
             #print(GPIO.input(inpt), end='')
             GPIO.input(inpt)
-            time.sleep(0.1);
+            time.sleep(0.5);
         except KeyboardInterrupt:
             print('CTRL-C - exiting')
             GPIO.cleanup()
@@ -64,6 +65,8 @@ while True:
     minutes += 1
 
     LperM = round(((rate_cnt*constant)/(rpt_int/60)),2)
+    if(LperM > 0):
+        sendemail.send('rdomloge@gmail.com', 'rdomloge+flow-iot@gmail.com', 'Flow event', 'Flow: '+str(LperM))
     TotLit = round(tot_cnt * constant,1)
     print('\nLitres / min ', LperM, '(',rpt_int, ' second sample)')
     sendFlow(LperM);
