@@ -7,7 +7,6 @@ import sendemail
 GPIO.setmode(GPIO.BOARD)
 inpt = 22
 GPIO.setup(inpt, GPIO.IN)
-minutes = 0
 constant = 0.006
 time_new = 0.0
 rpt_int = 10
@@ -44,25 +43,18 @@ GPIO.add_event_detect(inpt,GPIO.FALLING,
 
 # MAIN
 rpt_int = 300
-print('Reports every ', rpt_int, ' seconds')
-print('CTRL-C to exit')
+print('Reports every ', rpt_int, ' seconds. CTRL-C to exit')
 
 while True:
-    time_new = time.time()+rpt_int
     rate_cnt = 0
-    while time.time() <= time_new:
-        try:
-            None
-            #print(GPIO.input(inpt), end='')
-            GPIO.input(inpt)
-            time.sleep(0.5);
-        except KeyboardInterrupt:
-            print('CTRL-C - exiting')
-            GPIO.cleanup()
-            print('Done')
-            sys.exit()
-
-    minutes += 1
+    try:
+        None
+        time.sleep(rpt_int);
+    except KeyboardInterrupt:
+        print('CTRL-C - exiting')
+        GPIO.cleanup()
+        print('Done')
+        sys.exit()
 
     LperM = round(((rate_cnt*constant)/(rpt_int/60)),2)
     if(LperM > 0):
