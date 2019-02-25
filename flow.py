@@ -3,6 +3,7 @@
 import RPi.GPIO as GPIO
 import time, sys, socket, datetime, requests, json
 import sendemail
+import record_value
 
 GPIO.setmode(GPIO.BOARD)
 inpt = 22
@@ -21,22 +22,7 @@ def Pulse_cnt(inpt_pin):
     tot_cnt += 1
 
 def sendFlow(lpm):
-    url = 'http://10.0.0.14:8080/flowReadings'
-    data = {
-        "source": None,
-        "distance_cm": None,
-        "time": None,
-        "hostname": None
-    }
-    data["source"] = 'Pi0'
-    data["flow_lpm"] = lpm
-    data["hostname"] = socket.gethostname()
-    data["time"] = datetime.datetime.utcnow().isoformat()
-    jsonStr = json.dumps(data);
-    print("Data: "+jsonStr); 
-    response = requests.post(url, data=jsonStr)
-    print("Result: "+str(response.status_code));
-    print("Msg: "+response.text);
+    record_value.record('/flowReadings', 'flow_lpm', lpm, 'Pi0')
 
 GPIO.add_event_detect(inpt,GPIO.FALLING,
         callback=Pulse_cnt,bouncetime=10)
