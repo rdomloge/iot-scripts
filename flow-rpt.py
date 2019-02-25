@@ -3,12 +3,9 @@ import RPi.GPIO as GPIO
 import time, sys
 import sendemail
 
-f = open('FlowMeterOutput.txt', 'a')
-
 GPIO.setmode(GPIO.BOARD)
 inpt = 22
 GPIO.setup(inpt, GPIO.IN)
-minutes = 0
 constant = 0.006
 time_new = 0.0
 rpt_int = 10
@@ -31,9 +28,6 @@ print('Water Flow - approximate ',
 rpt_int = int(input('Input desired report interval in seconds '))
 print('Reports every ', rpt_int, ' seconds')
 print('CTRL-C to exit')
-f.write('\nWater Flow - approximate - Reports every ' +
-        str(rpt_int)+' Seconds  '+
-        str(time.asctime(time.localtime(time.time()))))
 
 while True:
     time_new = time.time()+rpt_int
@@ -47,26 +41,16 @@ while True:
         except KeyboardInterrupt:
             print('CTRL-C - exiting')
             GPIO.cleanup()
-            f.close()
             print('Done')
             sys.exit()
 
-    minutes += 1
-
     LperM = round(((rate_cnt*constant)/(rpt_int/60)),2)
+    LperM = 1;
     if(LperM > 0): 
             sendemail.send('rdomloge@gmail.com', 'rdomloge+flow-iot@gmail.com', 'Flow detected', 'Flow:'+str(LperM))
     TotLit = round(tot_cnt * constant,1)
     print('\nLitres / min ', LperM, '(',rpt_int, ' second sample)')
     print('Total litres ', TotLit)
-    print('Time (min & clock) ', minutes, '\t',
-            time.asctime(time.localtime(time.time())), '\n')
-    f.write('\nLitres / min ' + str(LperM))
-    f.write('  Total litres ' + str(TotLit))
-    f.write('  Tie (min & clock) ' + str(minutes) + '\t' +
-            str(time.asctime(time.localtime(time.time()))))
-    f.flush()
 
 GPIO.cleanup()
-f.close()
 print('Done')
