@@ -17,9 +17,9 @@ def record(url_path, k, v, source):
     data[k] = v;
 
     jsonStr = json.dumps(data);
-    doRestCallWithExceptionHandling(url, jsonStr)
+    doRestCallWithExceptionHandling(url, jsonStr, k)
 
-def doRestCallWithExceptionHandling(url, jsonStr):
+def doRestCallWithExceptionHandling(url, jsonStr, k):
     print("Data: "+jsonStr); 
     try:
         response = requests.post(url, data=jsonStr)

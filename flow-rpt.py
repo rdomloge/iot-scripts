@@ -45,7 +45,6 @@ while True:
             sys.exit()
 
     LperM = round(((rate_cnt*constant)/(rpt_int/60)),2)
-    LperM = 1;
     if(LperM > 0): 
             sendemail.send('rdomloge@gmail.com', 'rdomloge+flow-iot@gmail.com', 'Flow detected', 'Flow:'+str(LperM))
     TotLit = round(tot_cnt * constant,1)
