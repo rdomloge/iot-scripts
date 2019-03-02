@@ -13,4 +13,4 @@ def send(recipient, sender, subject, msg):
     except IOError:
         print('Looks like the network may be down');
     except:
-        print('Failed to send email');
+        print('Failed to send email: ', sys.exc_info()[0]);

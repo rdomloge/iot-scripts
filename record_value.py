@@ -26,5 +26,6 @@ def doRestCallWithExceptionHandling(url, jsonStr, k):
         print("Result: "+str(response.status_code));
         print("Msg: "+response.text);
     except:
+        print("Could not record result: ", sys.exc_info()[0]);
         sendemail.send('rdomloge@gmail.com', 'rdomloge@gmail.com', 'Can''t connect to IOT endpoint - '+k, 'Help!')
     
