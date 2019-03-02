@@ -22,7 +22,7 @@ def Pulse_cnt(inpt_pin):
     tot_cnt += 1
 
 def sendFlow(lpm):
-    record_value.record('/flowReadings', 'flow_lpm', lpm, 'Pi0')
+    record_value.record('/flowReadings', 'flowLpm', lpm, 'Pi0')
 
 GPIO.add_event_detect(inpt,GPIO.FALLING,
         callback=Pulse_cnt,bouncetime=10)
