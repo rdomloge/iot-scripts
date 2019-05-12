@@ -44,12 +44,10 @@ def distance():
  
 
 try:
-    while True:
-        dist = distance()
-        print ("Measured Distance = %.1f cm" % dist)
-        time.sleep(1)
- 
+    dist = distance()
+    print ("%.1f" % dist)
+    #time.sleep(1)
+    GPIO.cleanup()
 # Reset by pressing CTRL + C
 except KeyboardInterrupt:
-    print("Measurement stopped by User")
     GPIO.cleanup()
