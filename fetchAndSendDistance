@@ -1,9 +1,11 @@
 #!/bin/bash
 
-DISTANCE_CM=`python /home/pi/iot-scripts/distance.py`
+python /home/pi/iot-scripts/distance.py > /dev/null 2> /tmp/distance
+DISTANCE_MM=$(</tmp/distance)
+rm /tmp/distance
 
-echo The distance is "$DISTANCE_CM"/cm
+echo The distance is "$DISTANCE_MM"/mm
 
-python3 /home/pi/iot-scripts/sendDistance.py Pi0 "$DISTANCE_CM"
+python3 /home/pi/iot-scripts/sendDistance.py Pi0 "$DISTANCE_MM"
 
 

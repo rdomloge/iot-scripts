@@ -5,8 +5,8 @@ import time, sys, socket, datetime, requests, json
 import sendemail
 import record_value
 
-GPIO.setmode(GPIO.BOARD)
-inpt = 22
+GPIO.setmode(GPIO.BCM)
+inpt = 25
 GPIO.setup(inpt, GPIO.IN)
 constant = 0.006
 time_new = 0.0
