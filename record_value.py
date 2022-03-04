@@ -5,7 +5,7 @@ import socket
 import datetime
 import sendemail
 
-url_base = 'http://10.0.0.14:8080'
+url_base = 'http://10.0.0.10:8123'
 
 
 def record(url_path, k, v, source):

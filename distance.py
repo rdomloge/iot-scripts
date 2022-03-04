@@ -7,7 +7,7 @@ import time
 
 import VL53L1X
 
-attempts = 10;
+attempts = 20;
 
 
 def calcAvgDistance():
@@ -21,7 +21,7 @@ def calcAvgDistance():
         print("Measured "+str(measured))
         time.sleep(1)
 
-        if x > 3 and measured > 40:
+        if x > 3:
             samples += 1
             totalDistance += measured
             print(".")

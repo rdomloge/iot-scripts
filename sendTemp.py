@@ -8,7 +8,7 @@ if(len(sys.argv) < 3):
     print("Please provide args [SOURCE] [TEMP]");
 else:
     print("Args: "+str(sys.argv));
-    url = 'http://10.0.0.14:8080/temperatureReadings'
+    url = 'http://10.0.0.10:8123/temperatureReadings'
     data = {
             "source": None,
             "temp": None,

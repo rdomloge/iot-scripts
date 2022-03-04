@@ -8,7 +8,7 @@ import datetime
 
 def send(distance_mm, source):
     distance_cm = int(distance_mm) /10
-    url = 'http://10.0.0.14:8080/distanceReadings'
+    url = 'http://10.0.0.10:8123/distanceReadings'
     data = {
             "source": None,
             "distance_cm": None,

@@ -45,8 +45,6 @@ while True:
     LperM = round(((rate_cnt*constant)/(rpt_int/60)),2)
     if(LperM > 0):
         sendemail.send('rdomloge@gmail.com', 'rdomloge+flow-iot@gmail.com', 'Flow event', 'Flow: '+str(LperM))
-    if(rate_cnt > 0 and LperM == 0):
-        sendemail.send('rdomloge@gmail.com', 'rdomloge+false-reading@gmail.com', 'False flow', 'Flow reader read {} which rounds to zero.'.format(rate_cnt))
     TotLit = round(tot_cnt * constant,1)
     print('\nLitres / min ', LperM, '(',rpt_int, ' second sample)')
     sendFlow(LperM);
